@@ -1,0 +1,496 @@
+import React, { useState, useEffect } from 'react';
+import { Heart, Clock, ChevronRight, Camera, Sparkles, User, ShieldCheck, Zap, Quote, CheckCircle2, Calendar, Gem, Star, MapPin, MessageCircle, Award } from 'lucide-react';
+
+// カスタムアイコンコンポーネント
+const Icon = ({ name, size = 24, className = "" }) => {
+    const icons = {
+        Heart: <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />,
+        Clock: <><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></>,
+        ChevronRight: <path d="m9 18 6-6-6-6" />,
+        Camera: <><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z" /><circle cx="12" cy="13" r="3" /></>,
+        Sparkles: <><path d="m12 3 1.912 5.813a2 2 0 0 0 1.275 1.275L21 12l-5.813 1.912a2 2 0 0 0-1.275 1.275L12 21l-1.912-5.813a2 2 0 0 0-1.275-1.275L3 12l5.813-1.912a2 2 0 0 0 1.275-1.275L12 3Z" /><path d="M5 3v4" /><path d="M19 17v4" /><path d="M3 5h4" /><path d="M17 19h4" /></>,
+        User: <><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></>,
+        Zap: <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />,
+        CheckCircle2: <><circle cx="12" cy="12" r="10" /><path d="m9 12 2 2 4-4" /></>,
+        Calendar: <><rect width="18" height="18" x="3" y="4" rx="2" ry="2" /><line x1="16" x2="16" y1="2" y2="6" /><line x1="8" x2="8" y1="2" y2="6" /><line x1="3" x2="21" y1="10" y2="10" /></>,
+        Gem: <><path d="M6 3h12l4 6-10 12L2 9Z" /><path d="M11 3 8 9l4 12 4-12-3-6" /><path d="M2 9h20" /></>,
+        Star: <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />,
+        MessageCircle: <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 1 1-7.6-10.6 8.38 8.38 0 0 1 3.8.9L21 3z" />,
+        MapPin: <><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" /><circle cx="12" cy="10" r="3" /></>,
+        Award: <><path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526" /><circle cx="12" cy="8" r="6" /></>
+    };
+
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width={size}
+            height={size}
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={className}
+        >
+            {icons[name] || <circle cx="12" cy="12" r="10" />}
+        </svg>
+    );
+};
+
+const App = () => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
+
+  const worries = [
+    {
+      icon: "User",
+      title: "背中の肉が乗って閉まらない",
+      description: "お気に入りのドレスが見つかったのに、背中の肉が乗って閉まらなかった。一生に一度の日、後悔したくない。",
+      color: "bg-stone-800 text-white"
+    },
+    {
+      icon: "Camera",
+      title: "フォト婚前にあご下をスッキリ",
+      description: "一生残る写真だからこそ、横から撮られたときのフェイスラインが気になってしまう。写真で見たら想像以上にフェイスラインが見えなかった。",
+      color: "bg-rose-100 text-rose-700 border border-rose-200"
+    },
+    {
+      icon: "Clock",
+      title: "式まで時間がなくて焦っている",
+      description: "「もっと早く始めていれば…」と後悔。準備で忙しく、運動する時間も体力もない。",
+      color: "bg-stone-800 text-white"
+    }
+  ];
+
+  const voiceData = [
+    {
+      rating: 5,
+      quote: "式の二週間前に二の腕と背中を受けました。オフショルのドレスを選んでいたので不安でしたが、最後のフィッティングの時に二の腕と背中がびっくりするほど引き締まって綺麗にドレスを着れました！",
+      icon: "💍",
+      name: "Rさん",
+      profile: "27歳・挙式2週間前"
+    },
+    {
+      rating: 5,
+      quote: "撮影3週間前にあご下のスルリムを受けました。横顔の写真を見て『こんなにスッキリしてる！』と感動。一生の思い出になる写真なので、やってよかったと心から思います。",
+      icon: "📸",
+      name: "Kさん",
+      profile: "30歳・フォト婚前"
+    },
+    {
+      rating: 5,
+      quote: "１週間前にお腹周りが気になっていたのですが、１回の施術でウェイトがスッキリ・ドレスのシルエットが全然違って、旦那も驚いていました。ギリギリに施術したのですが、やってよっかた！！",
+      icon: "🌸",
+      name: "Nさん",
+      profile: "24歳・挙式1週間前に施術"
+    }
+  ];
+
+  const reasons = [
+    {
+      id: "01",
+      title: "式直前の「駆け込み」間に合うスピード感",
+      content: "式直前の3ヶ月〜1ヶ月前は、試着のたびに焦るもの。スルリムはダウンタイムがなく、最短１日〜数週間で変化を実感しやすいため、駆け込み需要に応えてくれます。",
+      check: "最短1日で変化を実感"
+    },
+    {
+      id: "02",
+      title: "背中・二の腕・あご下など\nドレス姿を左右する部位を重点的に",
+      content: "ウェディングドレスで目立つ「背中」「二の腕」「あご下」を引き締めるだけでドレス姿は見違えます。着たいドレスのデザインに合わせて部位を選んで施術できます。",
+      check: "部位を指定して痩せられる"
+    },
+    {
+      id: "03",
+      title: "施術約15分 当日から\nメイク・日常生活OK",
+      content: "注射を打つだけで手術不要。施術後はシャワーも当日から、メイクも当日からOK。結婚準備で忙しいプレ花嫁でも、隙間時間にご来店いただけます。",
+      check: "当日から普通の生活"
+    },
+    {
+      id: "04",
+      title: "税込9,800円という\n圧倒的低価格",
+      content: "結婚準備で出費がかさむ時期でも、無理ない価格設定。高額なコース契約やローンは一切不要。1回9,800円（税込）〜という驚きのコストパフォーマンスです。",
+      check: "税込9,800円〜✨"
+    }
+  ];
+
+  const timeline = [
+    { period: "挙式3週間前", title: "無料カウンセリング", description: "気になる部位を医師と相談。施術内容や効果について詳しくご説明し、最適なプランをご提案します。", icon: "Calendar" },
+    { period: "挙式2週間前", title: "スルリムの実施", description: "一回で効果を感じていただけます。効果は翌日から1週間で出る方もいます👌", icon: "Zap" },
+    { period: "挙式1週間前", title: "ドレス最終フィッティング", description: "スッキリした体型でドレスを試着。ほとんどのプレ花嫁さんが「変わった！」を実感する時期です。", icon: "CheckCircle2" },
+    { period: "挙式当日", title: "✨ 最高の一日を, 最高の自分で", description: "自信を持ってドレスを着こなし、一生の思い出に残る写真を残せます。", icon: "Gem", highlight: true }
+  ];
+
+  const clinics = [
+    {
+      region: "札幌院",
+      subgroups: [
+        { label: "東北", list: "青森院 / 仙台院 / 福島院" }
+      ]
+    },
+    {
+      region: "関東・東京（14院）",
+      subgroups: [
+        { label: "東京23区", list: "新橋院 / 池袋院 / 渋谷院 / 表参道院 / 錦糸町院 / 吉祥寺院" },
+        { label: "関東", list: "横浜駅前院 / 川崎院 / 大宮院 / 高崎院 / 千葉院 / 柏院 / 松戸院 / 宇都宮院" }
+      ]
+    },
+    {
+      region: "中部・関西（8院）",
+      subgroups: [
+        { label: "中部", list: "静岡院 / 名古屋院 / 金沢院 / 新潟院" },
+        { label: "関西", list: "心斎橋院 / 梅田院 / 京都院 / 三宮院" }
+      ]
+    },
+    {
+      region: "中国・四国・九州（8院）",
+      subgroups: [
+        { label: "中国・四国", list: "広島院 / 岡山院 / 高松院 / 松山院" },
+        { label: "九州・沖縄", list: "天神南院 / 熊本院 / 鹿児島院 / 那覇院" }
+      ]
+    }
+  ];
+
+  const comparisonCategories = [
+    { name: "効果が出るまで", lipo: "1ヶ月〜3ヶ月", cool: "1ヶ月〜3ヶ月", slim: "翌日〜1週間" },
+    { name: "部分痩せ", lipo: "ごっそり落とす", cool: "範囲限定的", slim: "自由自在\n部分痩せ特化！" },
+    { name: "リバウンド", lipo: "しにくい", cool: "しにくい", slim: "しにくい" },
+    { name: "準備・金額", lipo: "30万〜100万円\n手術・固定が必要", cool: "1部位 3万〜10万\n1回60分の拘束", slim: "税込9,800円〜✨\n約15分の施術のみ！" },
+    { name: "ダウンタイム", lipo: "非常に重い", cool: "軽い", slim: "0を追求" }
+  ];
+
+  return (
+    <div className="min-h-screen bg-stone-50 font-sans text-stone-900 overflow-x-hidden pb-20 lg:pb-0">
+      <nav className="fixed w-full z-[100] bg-white border-b border-stone-200 shadow-sm">
+        <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+          <div className="text-lg lg:text-2xl font-serif font-bold tracking-widest text-stone-800 uppercase">Slim Injection</div>
+          <button className="bg-stone-800 text-white px-5 py-1.5 rounded-full text-xs font-bold shadow-md active:scale-95 transition-transform">
+            無料相談
+          </button>
+        </div>
+      </nav>
+
+      <section className="relative pt-24 pb-12 lg:pt-48 lg:pb-32 flex flex-col items-center text-center px-4">
+        <div className="absolute inset-0 -z-20 bg-cover bg-center" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=1974&auto=format&fit=crop')" }}></div>
+        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-white/70 via-white/40 to-white/70"></div>
+        
+        <div className={`max-w-5xl mx-auto transition-all duration-1000 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+          <span className="inline-block py-1.5 px-6 bg-stone-800 text-white text-[10px] lg:text-xs font-bold tracking-[0.3em] uppercase mb-8 rounded-full shadow-md">
+            Wedding Beauty Medical
+          </span>
+          <div className="bg-white/50 backdrop-blur-lg border border-white/80 p-6 lg:p-14 rounded-[2rem] lg:rounded-[4rem] mb-10 shadow-xl">
+            <h1 className="text-3xl sm:text-5xl lg:text-8xl font-serif font-bold leading-[1.3] lg:leading-[1.1] tracking-tight text-stone-900" style={{ textShadow: '0 2px 10px rgba(255,255,255,0.8)' }}>
+              一生に一度の日に、<br />
+              最高の私で<br />
+              ドレスを纏いたい。
+            </h1>
+          </div>
+          <div className="mb-12 lg:mb-20">
+            <span className="text-xl sm:text-3xl lg:text-5xl font-serif font-bold text-rose-600 italic bg-white/90 px-8 py-3 rounded-2xl shadow-lg inline-block border border-rose-100">
+                １週間前でもまだ間に合う！
+            </span>
+          </div>
+          <div className="flex flex-wrap justify-center gap-3 lg:gap-12 mb-12 lg:mb-24">
+            {[
+              { label: "クリニック 全国", value: "34", unit: "院" },
+              { label: "施術時間 約", value: "15", unit: "分", highlight: true },
+              { label: "LINE友達数", value: "30", unit: "万人" }
+            ].map((stat, i) => (
+              <div key={i} className="w-24 h-24 sm:w-28 sm:h-28 lg:w-44 lg:h-44 rounded-full border border-white/80 bg-white/90 backdrop-blur-md flex flex-col items-center justify-center shadow-lg">
+                <span className="text-[8px] lg:text-sm text-stone-500 font-bold mb-0.5 tracking-tighter uppercase whitespace-nowrap">{stat.label}</span>
+                <div className="flex items-baseline text-stone-800">
+                  <span className={`text-xl lg:text-5xl font-bold ${stat.highlight ? 'text-rose-500' : 'text-stone-900'}`}>{stat.value}</span>
+                  <span className="text-[8px] lg:text-sm ml-0.5 font-bold">{stat.unit}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+          <button className="group w-full sm:w-auto bg-stone-800 text-white px-10 py-5 lg:px-16 lg:py-8 rounded-full text-lg lg:text-2xl font-bold flex items-center justify-center gap-3 hover:bg-stone-900 transition-all shadow-2xl mx-auto active:scale-95">
+            理想のラインを手に入れる
+            <ChevronRight className="w-6 h-6 lg:w-8 lg:h-8 group-hover:translate-x-2 transition-transform" />
+          </button>
+        </div>
+      </section>
+
+      <section className="py-16 lg:py-24 bg-white px-4">
+        <div className="max-w-4xl mx-auto text-stone-900">
+          <div className="text-center mb-12 lg:mb-16">
+            <h2 className="text-2xl lg:text-5xl font-serif mb-6 leading-relaxed text-stone-900 font-bold">
+              花嫁さんがドレス試着で感じる<br className="sm:hidden" />
+              <span className="text-stone-400 italic">リアルなお悩み 👗</span>
+            </h2>
+          </div>
+          <div className="flex flex-col gap-5 lg:gap-8">
+            {worries.map((worry, index) => (
+              <div key={index} className="bg-stone-50 p-6 lg:p-10 rounded-[1.5rem] lg:rounded-[2.5rem] border border-stone-100 shadow-sm flex flex-col sm:flex-row items-center sm:items-start gap-6 transition-all hover:bg-white hover:shadow-xl group">
+                <div className={`shrink-0 w-16 h-16 lg:w-20 lg:h-20 ${worry.color} rounded-2xl flex items-center justify-center shadow-md transition-transform group-hover:scale-105`}>
+                  <Icon name={worry.icon} />
+                </div>
+                <div className="flex-1 text-center sm:text-left text-stone-900">
+                  <h3 className="text-xl lg:text-3xl font-bold mb-3 tracking-tight">{worry.title}</h3>
+                  <p className="text-stone-600 leading-relaxed text-base lg:text-xl">
+                    {worry.description}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-16 lg:mt-24 py-12 lg:py-20 px-6 lg:px-16 bg-[#fffcf9] rounded-[2.5rem] lg:rounded-[4rem] shadow-sm border border-stone-100 relative overflow-hidden">
+            <div className="absolute top-10 right-10 opacity-[0.03] text-stone-900">
+              <Sparkles size={240} />
+            </div>
+            <div className="max-w-3xl mx-auto space-y-10 relative z-10 text-stone-800">
+              <h3 className="text-xl sm:text-3xl lg:text-5xl font-serif font-bold leading-[1.3] text-stone-800 text-center lg:text-left">
+                一生に一度の日だから、<br />
+                <span className="underline decoration-rose-200 decoration-8 underline-offset-4">全力で綺麗なりたいと思って当たり前。</span>
+              </h3>
+              <div className="space-y-6 text-stone-600 text-base lg:text-xl leading-relaxed">
+                <p>
+                  結婚式の準備をしながら、ダイエットまで頑張るのは本当に大変なこと。一番輝く瞬間を後悔なく迎えたいという気持ちは、誰もが持つ自然な想いです。
+                </p>
+                <p className="text-stone-900 font-bold text-xl lg:text-3xl pt-8 border-t border-stone-200">
+                  ドレスのデザインを、体型で妥協しないでください。
+                </p>
+              </div>
+              <div className="pt-16 lg:pt-24 border-t border-stone-200">
+                <h4 className="text-xl lg:text-4xl font-serif font-bold text-center mb-12 text-stone-900">
+                  忙しいプレ花嫁に選ばれる理由
+                </h4>
+                <div className="space-y-12">
+                  {reasons.map((reason, idx) => (
+                    <div key={idx} className="flex flex-col lg:flex-row gap-6 items-start text-stone-800">
+                      <div className="text-4xl lg:text-7xl font-serif text-stone-200 font-bold italic leading-none shrink-0">
+                        {reason.id}
+                      </div>
+                      <div className="flex-1">
+                        <h5 className="text-lg lg:text-2xl font-bold mb-2 text-stone-800 leading-tight tracking-tight">{reason.title}</h5>
+                        <p className="text-stone-500 leading-relaxed text-sm lg:text-lg mb-4">{reason.content}</p>
+                        {reason.check && (
+                          <div className="flex items-center gap-2 text-rose-500 font-bold text-sm lg:text-lg bg-rose-50/50 py-2 px-4 rounded-xl w-fit border border-rose-100">
+                            <Icon name="CheckCircle2" size={20} />
+                            {reason.check}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-16 lg:py-24 bg-stone-100 px-4">
+        <div className="max-w-4xl mx-auto space-y-24 lg:space-y-32">
+            <div>
+                <h4 className="text-2xl lg:text-5xl font-serif font-bold text-center mb-16 text-stone-900">
+                    💍 スルリム活用タイムライン
+                </h4>
+                <div className="relative max-w-2xl mx-auto space-y-12 before:absolute before:inset-0 before:ml-5 lg:before:ml-8 before:h-full before:w-0.5 before:bg-stone-300">
+                    {timeline.map((step, idx) => (
+                    <div key={idx} className="relative flex items-start gap-6 lg:gap-10 group text-stone-800">
+                        <div className={`flex items-center justify-center w-10 h-10 lg:w-16 lg:h-16 rounded-full border-4 border-white shadow-lg shrink-0 ${step.highlight ? 'bg-rose-400' : 'bg-stone-800'} z-10 text-stone-800`}>
+                          <Icon name={step.icon} size={20} className="text-white" />
+                        </div>
+                        <div className="flex-1 bg-white p-6 lg:p-10 rounded-[1.5rem] lg:rounded-[2.5rem] shadow-sm border border-stone-100">
+                        <div className="mb-4">
+                            <span className={`text-[10px] lg:text-sm font-bold px-4 py-1.5 rounded-full ${step.highlight ? 'bg-rose-50 text-rose-500' : 'bg-stone-100 text-stone-600'}`}>
+                            {step.period}
+                            </span>
+                        </div>
+                        <h5 className="text-lg lg:text-2xl font-bold mb-3 leading-tight text-stone-900">{step.title}</h5>
+                        <p className="text-stone-500 text-sm lg:text-lg leading-relaxed">{step.description}</p>
+                        </div>
+                    </div>
+                    ))}
+                </div>
+            </div>
+
+            <div>
+                <h4 className="text-2xl lg:text-5xl font-serif font-bold text-center mb-12 text-stone-900 tracking-tight">他施術との比較</h4>
+                <div className="overflow-hidden border border-stone-200 rounded-[1.5rem] lg:rounded-[2.5rem] shadow-sm">
+                    <table className="w-full border-collapse bg-white text-sm lg:text-xl">
+                        <thead>
+                            <tr className="bg-stone-800 text-white">
+                                <th className="p-3 lg:p-6 text-left border-b border-stone-700 font-bold">項目</th>
+                                <th className="p-3 lg:p-6 text-center border-b border-stone-700">脂肪吸引</th>
+                                <th className="p-3 lg:p-6 text-center border-b border-stone-700">脂肪冷却</th>
+                                <th className="p-2 sm:p-4 lg:p-6 text-center bg-rose-500 text-white font-bold border-b border-stone-700">スルリム</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {comparisonCategories.map((cat, idx) => (
+                                <tr key={idx} className="border-t border-stone-50 hover:bg-stone-50 transition-colors text-stone-800">
+                                    <td className="p-3 lg:p-6 font-bold text-stone-700 bg-stone-50/50 whitespace-nowrap">{cat.name}</td>
+                                    <td className="p-3 lg:p-6 text-center text-stone-400">{cat.lipo}</td>
+                                    <td className="p-3 lg:p-6 text-center text-stone-400">{cat.cool}</td>
+                                    <td className="p-2 sm:p-4 lg:p-8 text-center font-bold text-rose-600 bg-rose-50/30">{cat.slim}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div>
+                <div className="text-center mb-12 lg:mb-20 text-stone-900">
+                    <p className="text-rose-400 font-bold text-[10px] lg:text-sm tracking-widest uppercase mb-1">Voice — 花嫁さんたちの声</p>
+                    <h4 className="text-xl lg:text-4xl font-serif font-bold text-stone-900 tracking-tight">同じ悩みを持つ花嫁さんたちの一歩</h4>
+                </div>
+                <div className="grid gap-6 lg:gap-10 max-w-4xl mx-auto">
+                    {voiceData.map((v, i) => (
+                        <div key={i} className="bg-white p-6 lg:p-12 rounded-[2rem] border border-stone-100 shadow-sm text-left hover:shadow-xl transition-all text-stone-800">
+                            <div className="flex gap-1.5 mb-5">
+                                {[...Array(5)].map((_, idx) => (
+                                    <Icon key={idx} name="Star" size={16} className="text-rose-300 fill-rose-300" />
+                                ))}
+                            </div>
+                            <p className="text-lg lg:text-2xl mb-8 italic leading-relaxed text-stone-700">「{v.quote}」</p>
+                            <div className="flex items-center gap-5 border-t border-stone-50 pt-8">
+                                <span className="text-4xl lg:text-6xl leading-none">{v.icon}</span>
+                                <div>
+                                    <p className="font-bold text-xl lg:text-3xl text-stone-900">{v.name}</p>
+                                    <p className="text-stone-400 text-xs lg:text-lg mt-1 font-medium">{v.profile}</p>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
+      </section>
+
+      {/* Doctor Profile Section - NEWLY ADDED */}
+      <section className="py-20 lg:py-32 bg-white px-4 border-t border-stone-100 text-stone-900">
+          <div className="max-w-5xl mx-auto">
+              <div className="text-center mb-12 lg:mb-20">
+                  <span className="inline-flex items-center gap-3 text-stone-800 font-bold text-sm lg:text-lg tracking-widest uppercase mb-4">
+                      <Award className="w-6 h-6 text-rose-500" /> Doctor Profile
+                  </span>
+                  <h4 className="text-2xl lg:text-5xl font-serif text-stone-900 font-bold tracking-tight">
+                      担当医師紹介
+                  </h4>
+              </div>
+
+              <div className="bg-stone-50 rounded-[2.5rem] lg:rounded-[4rem] p-8 lg:p-20 flex flex-col md:flex-row gap-10 lg:gap-20 items-center md:items-start border border-stone-100">
+                  {/* Doctor Image Placeholder */}
+                  <div className="shrink-0 w-48 h-48 lg:w-72 lg:h-72 bg-white rounded-full border-4 border-rose-100 shadow-xl flex items-center justify-center overflow-hidden">
+                      <Icon name="User" size={120} className="text-stone-200" />
+                  </div>
+
+                  <div className="flex-1 space-y-10">
+                      <div>
+                          <p className="text-rose-500 font-bold text-sm lg:text-xl mb-2 tracking-widest">Slim Injection Clinic Doctor</p>
+                          <h5 className="text-3xl lg:text-6xl font-serif font-black text-stone-900 mb-2">河合 朋子</h5>
+                          <p className="text-stone-500 text-base lg:text-2xl font-bold">Kawai Tomoko</p>
+                      </div>
+
+                      <div className="space-y-6">
+                          <h6 className="text-lg lg:text-2xl font-bold text-stone-900 border-b-2 border-rose-200 pb-2 inline-block">経歴</h6>
+                          <ul className="space-y-3 text-stone-700 text-base lg:text-xl font-medium leading-relaxed">
+                              <li>藤田医科大学 医学部 卒業</li>
+                              <li>愛知県立循環器・呼吸器病センター 循環器内科</li>
+                              <li>藤田医科大学病院 循環器内科/助教</li>
+                          </ul>
+                      </div>
+
+                      <div className="space-y-6">
+                          <h6 className="text-lg lg:text-2xl font-bold text-stone-900 border-b-2 border-rose-200 pb-2 inline-block">資格</h6>
+                          <ul className="space-y-3 text-stone-700 text-base lg:text-xl font-medium leading-relaxed">
+                              <li>医学博士</li>
+                              <li>日本内科学会総合内科専門医・認定医</li>
+                              <li>日本循環器学会循環器専門医</li>
+                              <li>日本医師会認定産業医</li>
+                          </ul>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </section>
+
+      <section className="py-20 lg:py-32 bg-stone-50 px-4 border-t border-stone-100 text-stone-900">
+        <div className="max-w-4xl mx-auto text-stone-900">
+          <div className="text-center mb-12 lg:mb-20 text-stone-900">
+            <span className="inline-flex items-center gap-3 text-stone-900 font-bold text-sm lg:text-lg tracking-widest uppercase mb-4">
+              <MapPin className="w-6 h-6 text-rose-500" /> Nationwide Network
+            </span>
+            <h4 className="text-2xl lg:text-5xl font-serif text-stone-900 font-bold tracking-tight">
+              お近くのクリニックをチェック
+            </h4>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-10">
+            {clinics.map((region, idx) => (
+              <div key={idx} className="space-y-4 p-6 lg:p-10 rounded-[1.5rem] lg:rounded-[2.5rem] bg-white border border-stone-100 shadow-sm text-stone-800">
+                <h5 className="text-xl lg:text-3xl font-bold text-stone-900 border-b-2 border-rose-200 pb-3 text-stone-900">
+                  {region.region}
+                </h5>
+                <div className="space-y-4 text-stone-800">
+                  {region.subgroups.map((group, gIdx) => (
+                    <div key={gIdx} className="space-y-1 text-stone-800">
+                      <p className="text-[10px] lg:text-sm font-bold text-rose-500 uppercase tracking-wider">{group.label}</p>
+                      <p className="text-base lg:text-2xl text-stone-800 leading-relaxed font-bold">
+                        {group.list}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-20 lg:py-32 bg-[#F0FDF4] px-4 border-t-2 border-[#BBF7D0]">
+          <div className="max-w-4xl mx-auto text-center text-stone-900">
+              <div className="bg-white p-8 lg:p-16 rounded-[2.5rem] lg:rounded-[4rem] shadow-xl border-2 border-[#86EFAC]">
+                  <div className="flex justify-center mb-6">
+                      <div className="bg-[#06C755] p-4 lg:p-6 rounded-3xl shadow-lg text-white">
+                          <Icon name="MessageCircle" size={40} className="fill-white" />
+                      </div>
+                  </div>
+                  <h4 className="text-2xl lg:text-5xl font-serif font-black text-stone-900 mb-6 leading-tight">
+                      LINEで今すぐ<br className="sm:hidden" />無料相談・予約
+                  </h4>
+                  <p className="text-stone-700 text-lg lg:text-2xl mb-10 leading-relaxed font-bold">
+                      公式LINEなら、気になる部位の相談から<br className="hidden sm:block" />
+                      空き状況の確認まで、スマホ一つで完結します。
+                  </p>
+                  <button className="w-full max-w-lg bg-[#06C755] hover:bg-[#05b34d] text-white py-6 lg:py-10 rounded-full font-black flex items-center justify-center gap-6 shadow-[0_15px_40px_rgba(6,199,85,0.3)] transition-all hover:scale-[1.03] active:scale-95 text-white">
+                    <span className="text-xl lg:text-4xl tracking-tight">友達登録はこちら</span>
+                    <Icon name="ChevronRight" size={24} className="text-white" />
+                  </button>
+                  <p className="mt-8 text-stone-400 text-sm lg:text-lg font-bold">
+                      ※登録は無料です。無理な勧誘は一切ありません。
+                  </p>
+              </div>
+          </div>
+      </section>
+
+      <footer className="py-16 bg-stone-900 text-white text-center px-4">
+          <p className="mb-8 font-serif tracking-[0.4em] text-white/90 uppercase text-lg lg:text-3xl font-bold">Slim Injection Clinic</p>
+          <div className="flex flex-wrap justify-center gap-x-8 gap-y-4 mb-10 text-white/60">
+            <span className="hover:text-white cursor-pointer transition-colors text-xs lg:text-lg">プライバシーポリシー</span>
+            <span className="hover:text-white cursor-pointer transition-colors text-xs lg:text-lg">利用規約</span>
+            <span className="hover:text-white cursor-pointer transition-colors text-xs lg:text-lg">運営会社</span>
+          </div>
+          <p className="text-white/30 text-[10px] lg:text-sm">© 2024 Slim Injection Beauty Medical. All rights reserved.</p>
+      </footer>
+
+      <div className="lg:hidden fixed bottom-6 left-6 right-6 z-[110]">
+        <button className="w-full bg-[#06C755] text-white py-4 rounded-full font-bold shadow-2xl flex items-center justify-center gap-3 text-lg active:scale-95 border-2 border-white/20 text-white">
+          <Icon name="MessageCircle" size={24} className="fill-white" />
+          LINEで無料相談
+          <Icon name="ChevronRight" size={24} className="text-white" />
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default App;
